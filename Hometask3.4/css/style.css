@@ -1,0 +1,21 @@
+*{
+    box-sizing: content-box;
+}
+body
+{
+    height: 4000px;
+}
+.imghtml
+{
+    float: left;
+    margin: 0 20px 20px 0;
+}
+.imgcss
+{
+    float: right;
+    margin: 20px 0 20px 20px;
+}
+.text-box
+{
+    text-align: justify;
+}
