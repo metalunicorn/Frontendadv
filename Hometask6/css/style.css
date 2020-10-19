@@ -19,6 +19,12 @@ body
     z-index: 1;
     width: 100%;
 }
+.logo
+{
+    max-width: 100%;
+    height: auto;
+    vertical-align: top;
+}
 .navigation
 {
    display: flex;
@@ -28,6 +34,7 @@ body
    padding: 0;
    text-decoration: none;
    list-style-type: none;
+   margin-left: 20px;
 }
 .navigation li
 {
@@ -96,7 +103,6 @@ body
     background-color: white;
     margin: 10px 0;
 }
-
 .heading
 {
 background:url(../img/background.png);
@@ -309,7 +315,7 @@ color: #fff;
     justify-content: space-between;
     margin: 0 -7px;
 }
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1200px){
     .navigation
     {
         display: none;
@@ -328,7 +334,7 @@ color: #fff;
         display: none;
     }
 }
-@media screen and (max-width: 425px){
+@media screen and (max-width: 520px){
     .navigation
     {
         display: none;
@@ -345,6 +351,10 @@ color: #fff;
     {
         font-size: 32px;
     }
+    .heading__icon svg
+    {
+        display: none;
+    }
     .service__title
     {
         display: none;
@@ -354,7 +364,9 @@ color: #fff;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     height: 100%;
+    width: 100%;
     }
     .logo
     {
@@ -683,13 +695,31 @@ color: #fff;
     justify-content: center;
     align-items: center;
 }
-@media (max-width: 800px){
+@media (max-width: 950px){
+    
+    .Portfolio{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .Portfolio__title__endtext{
+        display: none;
+    }
+    .Portfolio__list{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
     .Portfolio__item1
     {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        width: 50%;
+        width: 390px;
     }
     .Portfolio__item
     {
@@ -705,17 +735,38 @@ color: #fff;
         max-width: calc(100% - 8px);
     }
     .clients{
-        align-items: center;
+        width: 100%;
     }
     .clients__list{
-        width: 50%;
-        align-items: center;
+        width: 100%;
     }
     .clients__item{
         align-items: center;
-        max-width: calc(100% - 8px);
+        max-width: calc(33% - 8px);
     }
     .clients__title__endtext{
+        display: none;
+    }
+    .Seo{
+        width: 50%;
+        flex-direction: column;
+        padding: 0 15px;
+        margin-bottom: 126px;
+    }
+    .clients
+    {
+        display: none;
+    }
+    .footer
+    {
+        display: none;
+    }
+    .achivments
+    {
+        display: none;
+    }
+    .Portfolio
+    {
         display: none;
     }
 }
