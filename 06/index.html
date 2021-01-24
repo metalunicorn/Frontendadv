@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+let Task = type => {
+    function a(a="Hello it is alert") {
+    alert(a)
+}
+
+function cube(a=2) {
+    return  a*a*a;
+}
+
+
+function avg2(a=5,b=6) {
+    return  (a + b) / 2
+}
+
+
+function sum3(a=3,b=2,c=0) {
+    return  a + b + c
+}
+
+
+function intRandom(a=5,b=25) {
+  return Math.round(Math.random()*(b-a)) +a
+}
+
+function greetAll() {
+  for (let i = 0; i < arguments.length; i++){
+       alert ("Hello," + arguments[i])
+    }
+}
+
+
+function sum2() {
+    var result = 0;
+  for (var i = 0; i < arguments.length; i++){
+       result += arguments[i]
+    }
+ return result;
+}
+    let Task = {
+        a,
+        cube,
+        avg2,
+        sum3,
+        intRandom,
+        greetAll,
+        sum2,
+        default: () => alert('not defined')
+}
+    return (Task[type] || Task.default)(); 
+};
+Task(prompt('Введите название задания','a'))
+    </script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="A">A</button>
+    <button id="B">B</button>
+    <h1 id="Cart"></h1>
+    <script>
+        let l = new Login(document.body)
+        let orderGoods = []
+        let goodArea = document.createElement('div')
+        let goodUl = document.createElement('ul')
+        const actionCartAdd = (id, count = 1) => ({type:"CART_ADD", id, count}) 
+        const actionCartDelete = (id) => ({type:"CART_DELETE", id}) 
+        const store = createStore(cartReducer)
+        store.subscribe(() => console.log(store.getState()))
+        const getGQL = url =>
+            (query, variables = {}) =>
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        ...(localStorage.authToken ? { Authorization: `Bearer ${localStorage.authToken}` } : {})
+                    },
+                    body: JSON.stringify({ query, variables })
+                })
+                    .then(res => res.json())
+
+        const gql = getGQL(`http://shop-roles.asmer.fs.a-level.com.ua/graphql`);
+
+
+
+        async function goodsAll(el, id) {
+                let result = await gql(
+                    `query Goods ($catId:String){
+            GoodFind(query: $catId) {
+                _id
+                name
+                description
+                price
+                images {
+                _id
+                createdAt
+                text
+                url
+                originalFileName
+                }
+            }
+        }`,
+                    { catId: JSON.stringify([{ "categories._id": id }, { sort: [{ name: 1 }] }]) }
+                );
+                
+                if (result.errors) return;
+                console.log(result)
+                goodUl.innerHTML = ""
+                goodArea.innerHTML = ""
+                let load;
+                for (let { name, _id, goods, images,description,price } of result.data.GoodFind) {
+                    let img = document.createElement("img")
+                    let li = document.createElement('li')
+                    li.innerText = name
+                    img.src = `http://shop-roles.asmer.fs.a-level.com.ua/${images[0].url}`
+                    let goodDescription = document.createElement("div")
+                    let btn = document.createElement("button")
+                    img.onclick = () => {
+                        goodDescription.innerHTML = `${name}<br>${description}<br>${price}`
+                        img.after(goodDescription)
+                        
+                        btn.innerText = "Добавить в корзину"
+                        img.after(btn)
+                        btn.onclick = () => {
+                            let count = +prompt("Введите количество")
+                            store.dispatch( actionCartAdd(_id,count))
+                            orderGood(_id, count)
+
+                        }
+                }
+                    goodArea.append(img)
+                    goodUl.append(li)
+                }
+                el.append(goodUl)
+                document.body.append(goodArea)
+        }
+
+
+        async function cat(el, parentId = null) {
+                    let category = await gql(`query cats($query:String){
+                                    CategoryFind(query: $query){
+                                        _id
+        name,
+        goods{
+        name
+        _id
+        },
+        parent{
+        name
+        }   
+    }
+    }`, { query: JSON.stringify([{ "parent._id": parentId }]) })
+
+                if (category.errors) return;
+                let ul = document.createElement('ul')
+                el.append(ul)
+                for (let { name, _id, goods } of category.data.CategoryFind) {
+                    let li = document.createElement("li")
+                    li.innerText = name
+                    let loaded;
+                    li.onclick = () => {
+                        if (!loaded) {
+                            cat(li, _id)
+                            goodsAll(li,_id)
+                            loaded = true
+                        }
+                        else{
+                            goodsAll(li,_id)
+                        }
+                    }
+                    ul.append(li)
+                    
+
+                }
+            }
+            cat(document.body)
+
+        async function addOrder(el) {
+
+                let order = await gql(`mutation newOrder($mass: [OrderGoodInput]){
+                OrderUpsert(order: {
+        orderGoods: $mass
+        })
+                {
+            orderGoods {
+            good {
+                            _id
+                name
+                images{
+                            url
+                            }
+                        }
+            _id
+            createdAt
+            price
+            count
+            total
+            }
+                    _id
+                    createdAt
+            total
+            
+                }
+        }`, { mass: orderGoods })
+        console.log(order)
+                let viewOrders = document.createElement("div")
+                let priceGoods = document.createElement('div')
+                viewOrders.innerText = `Ваши заказы :`
+                for (const { good, price, count, createdAt } of order.data.OrderUpsert.orderGoods) {
+
+
+
+                    viewOrders.innerHTML += `<br> ${good.name}: ${count} price: ${price} <br>`
+
+
+
+
+                    // let priceGood = document.createElement("div")
+                    // let countGood = document.createElement("div")
+
+                    // priceGood.innerText = 'Cтоимость: ' + price
+                    // countGood.innerText = 'количество товаров: ' + count
+                    // nameGood.innerText = good.name
+
+                    // viewOrders.append(nameGood)
+                    // viewOrders.append(countGood)
+                    // viewOrders.append(priceGood)
+
+                }
+                priceGoods.innerText = 'Общая стоимость: ' + order.data.OrderUpsert.total
+                viewOrders.append(priceGoods)
+                el.append(viewOrders)
+            }
+
+      function orderGood() {
+            for (let id in store.getState()) {
+                orderGoods.push({ count: store.getState()[id], good: { _id: id } })
+            }
+        }
+
+
+        function cart(el) {
+            let cart = document.createElement('span')
+            let cartOrder = document.createElement('span')
+            cart.innerHTML = '<img src="126083.png" width="30" height="30" alt="cart">'
+            el.append(cart)
+            var load;
+            cart.onclick = () => {
+                    addOrder(cartOrder)
+                if(!load){
+                el.append(cartOrder)
+                load = true
+                }
+            }
+
+        }
+        cart(document.body)
+
+    function createStore(reducer) {
+        let state = reducer(undefined, {})
+        let cbs = []
+
+        function dispatch(action) {
+            if (typeof action === 'function') {
+                return action(dispatch)
+            }
+            let newState = reducer(state, action)
+            if (state !== newState) {
+                state = newState
+                for (let cb of cbs) cb()
+            }
+        }
+
+        return {
+            getState() {
+                return state
+            },
+            dispatch,
+            subscribe(cb) {
+                cbs.push(cb)
+                return () => {
+                    cbs = cbs.filter(someElement => someElement !== cb)
+                }
+            }
+        }
+    }
+
+    function cartReducer(state = {}, {type,id,count}){
+
+            if(type === "CART_ADD"){
+                return {
+                    ...state,
+                    [id] : count + (state[id] || 0)
+                }
+            }
+            if(type === "CART_DELETE"){
+                const {[id]:dich,...newState } = state;
+                return newState
+            }
+            return state
+
+        }
+
+
+        function promiseReducer(state = {}, {type,status,payload,error,}) {
+                if (type === "PROMISE") {
+                    return {...state, [name]:{status,payload,error}}
+                }
+                return state
+        }   
+           
+        
+       
+
+
+
+
+
+
+
+        function Password(parent, open) {
+
+            const passwordArea = document.createElement("div")
+            this.password = document.createElement("input")
+            const checkbox = document.createElement("div")
+            this.img = document.createElement("img")
+            var pass = this
+
+            passwordArea.setAttribute("class", "passwordArea")
+            this.password.setAttribute("class", "password")
+
+            parent.append(passwordArea)
+            passwordArea.append(this.password)
+            passwordArea.append(checkbox)
+            checkbox.append(this.img)
+
+            this.setValue = function (newValue) {
+                this.password.value = newValue
+                return this.password.value
+            }
+
+            this.getValue = function () {
+                return this.password.value
+            }
+
+            this.setOpen = function (newOpen) {
+                open = newOpen
+                seePass()
+                return open;
+            }
+            this.getOpen = function () {
+                return open;
+            }
+
+            this.img.onclick = function () {
+                if (open) {
+                    pass.img.setAttribute('src', 'close.png')
+                    pass.password.setAttribute('type', 'password')
+                    open = false
+                }
+                else {
+                    pass.img.setAttribute('src', 'open.png')
+                    pass.password.setAttribute('type', 'text')
+                    open = true
+                }
+                pass.onOpenChange()
+            }
+            console.log(this)
+            this.password.oninput = () => {
+                this.onChange()
+            }
+            this.onChange = () => { }
+            this.onOpenChange = () => { }
+            function seePass() {
+                if (open) {
+                    pass.img.setAttribute('src', 'open.png')
+                    pass.password.setAttribute('type', 'text')
+                }
+                else {
+                    pass.img.setAttribute('src', 'close.png')
+                    pass.password.setAttribute('type', 'password')
+                }
+            }
+            seePass()
+        }
+
+
+
+
+        function Login(parent) {
+            let password2 = new Password(document.body, open)
+            const input = document.createElement('input')
+            const button = document.createElement('button')
+            button.setAttribute('disabled', 'disabled')
+            button.innerText = 'Login'
+
+
+            var open = false;
+            parent.append(input)
+            parent.append(button)
+            var login = this
+
+            input.onkeyup = function () {
+                if (password2.password.value.length != 0 && input.value.length != 0) {
+                    button.removeAttribute("disabled")
+                    open = true
+                }
+                else {
+                    button.setAttribute('disabled', 'disabled')
+                    open = false
+                }
+            }
+
+            password2.onChange = function () {
+                if (password2.password.value.length != 0 && input.value.length != 0) {
+                    button.removeAttribute("disabled")
+                }
+                else {
+                    button.setAttribute('disabled', 'disabled')
+                }
+                this.onOpenChange()
+            }
+
+            input.oninput = () => {
+                login.onChange()
+            }
+
+            this.getValuePass = function () {
+                return password2.password.value
+            }
+
+            this.setValue = function (newValue) {
+                input.value = newValue
+                return input.value
+            }
+
+            this.getValue = function () {
+                return input.value
+            }
+
+            this.setOpen = function (newOpen) {
+                if (newOpen) {
+                    button.removeAttribute("disabled")
+                }
+                else {
+                    button.setAttribute('disabled', 'disabled')
+                }
+                open = newOpen
+                return newOpen;
+            }
+
+            this.getOpen = function () {
+                return open;
+            }
+
+            button.onclick = () => {
+                if (this.onlogin) {
+                    this.onlogin(input.value, password2.password.value)
+                }
+            }
+
+            console.log(this)
+
+            this.onChange = () => { }
+            this.onOpenChange = () => { }
+        }
+
+        l.onlogin = async (login, password) => {
+            let result = await gql(`query login($login:String, $password:String){
+                      login(login:$login,password:$password)
+                }`, { login, password })
+            console.log(result)
+            if (result.errors) return;
+            result.data.login ? (localStorage.authToken = result.data.login) : console.log("Неправильно введен логин или пароль")
+        }
+
+    </script>
+</body>
+
+</html>

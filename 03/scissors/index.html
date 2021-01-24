@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+let variant = prompt("Введите: камень,ножницы,бумага").toLowerCase();
+let compvar = ["камень","ножницы","бумага"]
+let compvar2 = compvar[Math.floor(Math.random() * (3 - 0) + 0)]
+if (variant === compvar2) {
+    alert("draw")
+}
+else if (variant === "камень"){
+   if (compvar2 === "ножницы"){
+    alert("You win")}
+    else{
+     alert("You lose")}
+}
+else if (variant === "ножницы"){
+   if (compvar2 === "бумага"){
+    alert("You win")}
+    else{
+     alert("You lose")}
+}
+else if (variant === "бумага"){
+   if (compvar2 === "камень"){
+    alert("You win")}
+    else{
+     alert("You lose")}
+}
+else{
+    alert("Не то ввел")
+}
+   </script>
+</body>
+</html>

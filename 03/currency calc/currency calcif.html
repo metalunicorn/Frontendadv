@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<script>
+
+let ratios = {
+    value: ["usd","eur"],
+    usd: 25.6,
+    eur: 29
+}
+let money = prompt("Введите валюту eur or usd","").toLowerCase();
+if(money === ratios.value[0]){
+       confirm("Ок если продажа или отмена если покупка"); 
+        if(confirm==true){
+            let sell = prompt("Сколько вы хотите продать?","");
+            alert("Ваша сумма в грн: "+(sell * ratios.usd).toFixed(2));
+        }
+        else{
+        let buy = prompt("Сколько вы хотите купить?","");
+        alert("Вам нужно : "+(buy * ratios.usd).toFixed(2)+"грн"); 
+        }   
+}
+else if(money === ratios.value[1]){
+       confirm("Ок если продажа или отмена если покупка"); 
+        if(confirm==true){
+            let sell = prompt("Сколько вы хотите продать?","");
+            alert("Ваша сумма в грн: "+(sell * ratios.eur).toFixed(2));
+        }
+        else{
+        let buy = prompt("Сколько вы хотите купить?","");
+        alert("Вам нужно : "+(buy * ratios.eur).toFixed(2)+"грн"); 
+        }   
+}
+else{
+    alert("Error");
+}
+
+
+let ratios = {
+    value: ["usd","eur"],
+    usd: 25.6,
+    eur: 29
+}
+let money = prompt("Введите валюту php or usd","").toLowerCase();
+if(money === ratios.value[0]){
+       confirm("Ок если продажа или отмена если покупка"); 
+        if(confirm==true){
+            let sell = prompt("Сколько вы хотите продать?","");
+            alert("Ваша сумма в грн: "+(sell * ratios.usd).toFixed(2));
+        }
+        else{
+        let buy = prompt("Сколько вы хотите купить?","");
+        alert("Вам нужно : "+(buy * ratios.usd).toFixed(2)+"грн"); 
+        }   
+}
+else if(money === ratios.value[1]){
+       confirm("Ок если продажа или отмена если покупка"); 
+        if(confirm==true){
+            let sell = prompt("Сколько вы хотите продать?","");
+            alert("Ваша сумма в грн: "+(sell * ratios.eur).toFixed(2));
+        }
+        else{
+        let buy = prompt("Сколько вы хотите купить?","");
+        alert("Вам нужно : "+(buy * ratios.eur).toFixed(2)+"грн"); 
+        }   
+}
+else{
+    alert("Error");
+}
+</script>
+</body>
+</html>

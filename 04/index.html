@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        table td{
+            padding: 20px;
+            border:  2px solid rgb(44, 116, 116);
+        }
+    </style>
+
+    <script>
+var question = prompt("Введите название задания")
+
+if (question === "html tree") {
+        var body = {
+            tagName: "body",
+            subTags: [{
+                tagName: "div",
+                subTags:  [ {
+                    tagName: "span",
+                    text: "Enter a data please:",
+                    subTags: [{tagName: "/br"}]
+                    },
+                    {
+                    tagName: "input", 
+                    attrs : [{type:'text'}, {id:'surname'}] 
+                    },
+                    {
+                    tagName: "input", 
+                    attrs : [ {type:'text'}, {id:'surname'}] 
+                    }
+                ]
+            },
+            {
+                tagName: "div", 
+                subTags: [{
+                    tagName: "button", 
+                    attrs : {id:'ok'}, 
+                    text: "ok"
+                    },{
+                    tagName: "button", 
+                    attrs : {id:'cancel'}, 
+                    text: "cancel"
+                    }
+                ]
+            } 
+        ]}
+
+}
+else if (question === "declarative fields" ) {
+        var person = {
+        smartphone : phone,
+        laptop : notebook,
+        name:  prompt("Enter name"),
+        surname: prompt("Enter surname"),
+        married: confirm("married?"),
+    }
+    var notebook = {
+        owner: person,
+        brand: prompt("Enter brand"),
+        type:  prompt("Enter type"),
+        model: prompt("Enter model"),
+        ram: prompt("Enter ram"),
+        size: prompt("Enter size"),
+        weight: prompt("Enter weight"),
+        resolution: {
+            width: prompt("Enter width"),
+            height: prompt("Enter height"),
+        },
+    };
+
+    var phone = {
+        owner: person,
+        brand: prompt("Enter brand"),
+        model: prompt("Enter model"),
+        ram: prompt("Enter ram"),
+        color: prompt("Enter color"),
+        }; 
+    
+}
+
+
+else if (question === "object links") {
+        var person = {
+            name:  prompt("Enter name"),
+            surname: prompt("Enter surname"),
+            married: confirm("married?"),
+        }
+        person["laptop"] = {
+            owner: person,
+            brand: prompt("Enter brand"),
+            type:  prompt("Enter type"),
+            model: prompt("Enter model"),
+            ram: prompt("Enter ram"),
+            size: prompt("Enter size"),
+            weight: prompt("Enter weight"),
+            resolution: {
+                width: prompt("Enter width"),
+                height: prompt("Enter height"),
+            },
+        };
+
+        person["smartphone"] = {
+            owner: person,
+            brand: prompt("Enter brand"),
+            model: prompt("Enter model"),
+            ram: prompt("Enter ram"),
+            color: prompt("Enter color"),
+        }; 
+}
+
+
+
+else if (question === "imperative array fill 3") {
+        let arr = [prompt("Обьявляю переменную,присваиваю ей масив,внутри тела масива через запятую прописываю три функции prompt()"),prompt(),prompt()];
+        let wr = confirm()
+        while(wr != true){
+        wr = confirm()
+        };
+} 
+
+
+
+
+else if (question === "array fill") {
+    var arr = []
+    //debugger;
+    while(prompt() != null){
+        text = prompt() 
+        arr.push(prompt())
+    }
+} 
+
+
+
+else if (question === "array fill nopush") {
+    var arr = [];  
+    var i = 0;
+    do {
+        var txt = prompt();
+        arr[i++] = txt;  
+    }
+    while (txt != null){   
+    }
+}
+
+
+else if (question === "infinite probability") {
+    let i = 0;
+    while (Math.random()) {
+        if(Math.random() > 0.9) {
+            break;
+        }
+        i++
+    }    
+    alert(i)
+}
+
+
+else if (question === "empty loop") {
+    while(prompt()!=null){
+    }
+}
+
+
+else if (question === "progression sum") {
+    for (let i=1; i<50; i+=3){
+    console.log(i)
+    }
+}
+
+else if (question === "chess one line") {
+    var quart = '#';     
+    var whitespace = ' ';
+    var sting = "";
+    for (var i = 0; i < 6 ; ++i) {  
+        sting += quart;
+        sting += whitespace;     
+    }    
+}
+
+else if (question === "numbers") {
+    var string = ""
+    for (var i = 0; i < 10 ; ++i) {     
+        for( var num = 0; num<10; ++num){
+            string +=num
+        }
+    string+="\n"
+    }
+}
+
+
+
+else if (question === "chess") {
+var str = "\n"
+var oct = "#"
+var dt = "."
+    for ( let j = 0; j < 5; j++) {
+    if(j%2){
+        oct = "#"
+        dt = "."
+    }
+    else{
+        dt = "#"
+        oct = "."
+        }    
+    for ( let i = 0;  i < 10; i++) {    
+        if (i%2){
+        str += oct
+        }
+        else{
+        str += dt
+        }
+    }
+        str += "\n"
+}
+   
+}
+
+else if (question === "cubes") {
+    var arr = []
+    var j=0;
+    for(i=0;i<10;i++){
+        let l= Math.pow(j,3)
+        arr.push (l)
+        j++
+    }
+}
+
+
+else if (question === "multiply table") {
+    var arr = []
+    var str;
+    for(i=0;i<11;i++){
+    arr[i]=[]
+    for(j=0;j<11;j++){
+        arr[i][j]=j*i
+    } 
+    }
+}
+
+else if (question === "matrix to html table") {
+    var table = document.createElement("table")
+    var arr = []
+    var str;
+    for(i=0;i<11;i++){
+        arr[i]=[]
+        for(j=0;j<11;j++){
+            arr[i][j]=j*i
+        } 
+    }
+    for(k=0;k<arr.length;k++){
+        var tr = document.createElement("tr")
+        for(h=0;h<arr[k].length;h++){
+            var td = document.createElement("td")
+            td.innerHTML = arr[k][h];
+            tr.appendChild(td)
+        }
+        table.appendChild(tr)
+    }
+    document.body.append(table)
+}
+else if (question === "Треугольник") { 
+    let h = 6;
+    let str = "\n"
+    let octar = "#"
+        for (let i = 0; i<h; i++)
+        {
+            for (let j = 1; j < h - i; j++){
+                str+="."
+            }
+            for (let j = h - 2*i; j <= h; j++){
+                str+=octar
+            }
+            for (let j = 1; j < h - i; j++){
+                str+="."
+            }
+        str +="\n"
+        }
+}
+else {
+    alert("на синий черный пояс попытаюсь сделать 17.11.20 либо неправильно ввели")
+    let history = [1,1,1,1]
+    let predictArray = [
+ [
+  [
+   [1,1],
+   [1,1],
+  ],
+  [
+   [1,1],
+   [1,1],
+  ],
+ ],
+ [
+   [
+    [1,1],
+    [1,1],
+   ],
+   [
+    [1,1],
+    [1,1],
+   ],
+ ],
+]
+let predict = Math.floor(Math.random() * (1 - 0 + 1)) + 0
+while(( enterNum = prompt())!=null){
+enterNum = Number(enterNum)
+predictArray = [[history[0]],[history[1]],[history[2]],[history[3]]]
+predict = Math.floor(Math.random() * (1 - 0 + 1)) + 0
+debugger;
+console.log(predict)
+history.push(enterNum)
+history.shift()
+if (predictArray[0] != ((0 || 1))){
+    if (enterNum == predict){
+        alert("Я вижу будущее")
+    }
+    else{
+        alert("В следующий раз угадаю точно")
+    }
+}
+if (enterNum == predictArray[0]&&(predictArray[0] != ((0 || 1)))){
+    alert("Я вижу будущее")
+}
+else{
+    alert("В следующий раз угадаю точно")
+}
+}
+}
+    </script>
+</body>
+</html>

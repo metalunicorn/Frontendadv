@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+var table = document.createElement("table")
+    var arr = []
+    var str;
+    for(i=1;i<10;i++){
+        arr[i]=[]
+        for(j=1;j<10;j++){
+            arr[i][j]=j*i
+        } 
+    }
+    for(k=1;k<arr.length;k++){
+        var tr = document.createElement("tr")
+        for(h=1;h<arr[k].length;h++){
+            var td = document.createElement("td")
+            td.innerText = arr[k][h];
+            tr.appendChild(td);
+            td.style.border = "1px solid black";
+            td.style.fontSize = "28px "
+            td.style.width = "50px"
+            td.style.height = "50px"
+            td.style.textAlign = "center"
+            td.setAttribute("Class","td");
+            // td.onmouseover = function(){
+            //     this.style.background = "black"
+            //     this.style.color = "white"
+            // }
+            // td.onmouseout = function(){
+            //     this.style.background = "white"
+            //     this.style.color = "black"
+            // }
+            
+            
+                            
+                            td.onmouseover = function () {
+                                this.parentElement.style.backgroundColor = "violet"
+                                let index = this.cellIndex
+                            for (let node of table.rows) {
+                                node.cells[index].style.backgroundColor = "violet"
+                                
+                            }
+                                this.style.backgroundColor = "yellow"
+                            }
+                            
+
+
+
+                            
+                            td.onmouseout = function () {
+                                this.parentElement.style.backgroundColor = ""
+                                let index = this.cellIndex
+                            for (let node of table.rows) {
+                                node.children[index].style.backgroundColor = ""
+                                
+                            }
+                                this.style.backgroundColor = ""
+                            }
+                            
+        }
+        table.appendChild(tr)
+    }
+
+    document.body.append(table)
+
+    let titleCalc = document.createElement ("h1");
+    titleCalc.setAttribute("id","titleCalc");
+    titleCalc.innerHTML = "Суточная норма калорий";
+    document.body.append(titleCalc);
+
+
+    let inputHeight = document.createElement("input")
+    inputHeight.setAttribute("id","Height")
+    inputHeight.setAttribute("placeholder",'Введите ваш рост(см)')
+    document.body.append(inputHeight);
+    
+    
+    let inputWeight = document.createElement("input")
+    inputWeight.setAttribute("id","Weight")
+    inputWeight.setAttribute("placeholder",'Введите ваш вес(кг)')
+    document.body.append(inputWeight);
+
+
+    let inputAge = document.createElement("input")
+    inputAge.setAttribute("id","Age")
+    inputAge.setAttribute("placeholder",'Введите ваш возраст(г)')
+    document.body.append(inputAge);
+
+    let selectSex = document.createElement("select")
+    selectSex.setAttribute("id","select")
+    selectSex.setAttribute("value","Пол")
+    document.body.append(selectSex);
+
+    let optionSex1 = document.createElement("option")
+    optionSex1.setAttribute("value","None")
+    optionSex1.setAttribute("hidden","")
+    optionSex1.innerHTML = "Пол"
+    selectSex.appendChild(optionSex1)
+
+    let optionSexMan = document.createElement("option")
+    optionSexMan.setAttribute("value","Man")
+    optionSexMan.innerHTML = "Мужчина"
+    selectSex.appendChild(optionSexMan)
+
+
+    let optionSexWoman = document.createElement("option")
+    optionSexWoman.setAttribute("value","Woman")
+    optionSexWoman.innerHTML = "Женщина"
+    selectSex.appendChild(optionSexWoman)
+
+
+    let physicalActivityOptions = ["Минимальная","Низкая","Средняя","Высокая","Очень высокая"];
+
+    let selectsPhysicalActivity = document.createElement("select")
+    selectsPhysicalActivity.setAttribute("id","selectsPhysicalActivit")
+    document.body.append(selectsPhysicalActivity);
+
+    let physicalActivity1 = document.createElement("option")
+    physicalActivity1.setAttribute("value","None")
+    physicalActivity1.setAttribute("hidden","")
+    physicalActivity1.innerHTML = "Активность"
+    selectsPhysicalActivity.appendChild(physicalActivity1)
+
+    for (const key in physicalActivityOptions) {
+        let physicalActivity = document.createElement("option")
+        physicalActivity.setAttribute("class","physicalaActivity")
+        physicalActivity.setAttribute("value",`${physicalActivityOptions[key]}`)
+        physicalActivity.innerHTML = `${physicalActivityOptions[key]}`
+        selectsPhysicalActivity.appendChild(physicalActivity)
+    }
+
+    let buttonSend = document.createElement("button")
+            buttonSend.setAttribute("id","send")
+            buttonSend.innerHTML = "Send"
+            document.body.append(buttonSend);
+
+    let result = document.createElement('input');
+            result.className = "result";
+            buttonSend.after(result);
+    
+   
+           function calc() {
+                if (selectSex.value == "Man") {
+
+                    if (selectsPhysicalActivity.value == physicalActivityOptions[0]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) + 5) * 1.2} Ккал`
+                    }
+                    else if (selectsPhysicalActivity.value == physicalActivityOptions[1]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) + 5) * 1.37} Ккал`
+                    }
+                    else if (selectsPhysicalActivity.value == physicalActivityOptions[2]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) + 5) * 1.55} Ккал`
+                    }
+                    else if (selectsPhysicalActivity.value == physicalActivityOptions[3]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) + 5) * 1.72} Ккал`
+                    }
+                    else{
+
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) + 5) * 1.9} Ккал`
+                    }
+
+                }
+                else{
+
+                    if (selectsPhysicalActivity.value == physicalActivityOptions[0]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) - 161) * 1.2} Ккал`
+                    }
+
+
+                    else if (selectsPhysicalActivity.value == physicalActivityOptions[1]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) -161) * 1.37} Ккал`
+                    }
+
+
+                    else if (selectsPhysicalActivity.value == physicalActivityOptions[2]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) + 5) * 1.55} Ккал`
+                    }
+
+
+                    else if (selectsPhysicalActivity.value == physicalActivityOptions[3]) {
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) -161) * 1.72} Ккал`
+                    }
+
+
+                    else{
+
+                        result.value = `${(10 * (+inputWeight.value) + 6.25 * (+inputHeight.value) - 5 * (+inputAge.value) -161) * 1.9} Ккал`
+                    }
+                }    
+            
+            }
+
+            inputWeight.oninput = calc
+            inputHeight.oninput = calc
+            inputAge.oninput = calc
+            selectSex.onchange = calc
+            selectsPhysicalActivity.onchange = calc
+    </script>
+
+</body>
+</html>

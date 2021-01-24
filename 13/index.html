@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const delay = ms => new Promise(ok => setTimeout(() => ok(ms), ms))
+
+// async function trafficLight(el,{greenTime = 5000,redTime=2000,yellowTime=1000}={}){
+
+//     let red = document.createElement('div')
+//     red.setAttribute('id','red')
+//     let yellow = document.createElement('div')
+//     red.setAttribute('id','yellow')
+//     let green = document.createElement('div')
+//     red.setAttribute('id','green')
+
+//     el.append(red)
+//     el.append(yellow)
+//     el.append(green)
+
+
+//     while (true){
+//         await delay(greenTime)
+//         red.style.backgroundColor = 'red'
+//         green.style.backgroundColor = ''
+//         yellow.style.backgroundColor = ''
+
+//         await delay(redTime)
+//         red.style.backgroundColor = ''
+//         green.style.backgroundColor = ''
+//         yellow.style.backgroundColor = 'yellow'
+//         //console.log('красный горит:', redTime, ',ms')
+
+//         await delay(yellowTime)
+//         green.style.backgroundColor = 'green'
+//         red.style.backgroundColor = ''
+//         yellow.style.backgroundColor = ''
+//         //console.log('желтый горит:', yellowTime, ',ms')
+//     }
+// }
+// trafficLight(document.body)
+
+// let button = document.createElement('button')
+// document.body.append(button)
+
+
+// async function domEventPromise(el,event) {  
+//     let promise = new Promise((resolve) => {
+//     function handler() {
+//         el.removeEventListener(event, handler)
+//         resolve(el);
+//     }
+//     el.addEventListener(event, handler)
+     
+    
+//     })
+    
+//     let result = await promise
+//     return result   
+// }
+// domEventPromise(button,'click').then( e => console.log('event click happens', e))
+
+
+// function innerTimer(el, ms) {
+//     for (let i = ms; i > 0; i--) {
+//         setTimeout(() => (el.innerText = i), ((ms/1000) - i) * 1000);
+//     }
+//     setTimeout(() => (el.innerText = ""), ms);
+// }
+
+
+
+// async function PedestrianTrafficLight(el) {
+//     let red = document.createElement('div')
+//     red.setAttribute('id','red')
+
+
+//     let green = document.createElement('div')
+//     red.setAttribute('id','green')
+
+
+
+//     el.append(red)
+//     el.append(green)
+//     while (true){
+
+//         // let timeBtn = domEventPromise(btn,'click')
+//         // Promise.race([reds(), timeBtn]).then(greens())
+//         // debugger
+//         red.innerText = ''
+//         red.style.backgroundColor = 'red'
+//         green.style.backgroundColor = 'black'
+//         innerTimer(red, 1000)
+//         let timeRed = await delay(1000)
+//         red.style.backgroundColor = 'black'
+//         green.style.backgroundColor = 'green'
+//         innerTimer(green, 5000)
+//         let timeGreen = await delay(5000)
+//         green.innerText = ''
+//     }
+// }
+// PedestrianTrafficLight(document.body)
+
+
+
+
+
+
+
+
+// async function Pedestrian(el) {
+// const delay = (ms) => new Promise((ok) => setTimeout(() => ok(ms), ms));
+
+// let red = document.createElement('div')
+//     red.setAttribute('id','red')
+
+
+//     let green = document.createElement('div')
+//     red.setAttribute('id','green')
+
+//     let btn = document.createElement('button')
+//     btn.setAttribute =('id','btn')
+//     btn.innerText = 'Go'
+
+
+//     el.append(red)
+//     el.append(green)
+//     el.append(btn)
+
+
+
+//     async function domEventPromise(el,event) {  
+//     return new Promise((resolve) => {
+//     function handler() {
+//         el.removeEventListener(event, handler)
+//         resolve(el);
+//     }
+//     el.addEventListener(event, handler)
+//     })
+//     }
+//     domEventPromise(btn,'click').then( e => console.log('event click happens', e))
+
+//     while (true){
+        
+//         green.style.backgroundColor = 'green'
+//         red.style.backgroundColor = ''
+//         btn.disabled = true;
+//         red.innerText = ''
+//         green.innerText = ''
+//         innerTimer(green, 5000)
+//         let timeRed = await delay(5000)
+//         await Promise.race([
+//         domEventPromise(btn,'click'),
+//         Redtime3()
+//         ])
+
+
+//         async function Redtime3() {
+//             innerTimer(red, 5000)
+//             red.innerText = ''
+//             green.style.backgroundColor = ''
+//             red.style.backgroundColor = 'red'
+//             let timeRed2 = await delay(2000)
+//             btn.disabled = false
+//             let timeRed3 = await delay(3000)
+//             return timeRed3
+//             }
+//     }
+// }
+
+// Pedestrian(document.body);
+
+
+
+async function speedTest(getPromise,count,parallel){
+    let allTime = 0;
+    let promises = []
+    var t0 = performance.now();
+    for (let i = 0; i < count; i++) {
+        for (let j = 0; j < parallel; j++) 
+        {
+        var a =  await Promise.all([promises]) 
+        var t3 = performance.now()
+        var t4 =0;
+        promises.push((getPromise()).then(() => {
+            t2 = performance.now()
+            t4 += t2
+            return t2
+        }))
+        }
+
+    }
+    
+    let result = await a[0][0]
+    let durat = result-t0
+    console.log(t4)
+    let parallSpeed = (t3/(count*parallel))-t0;
+    let paralDurat = 1/parallSpeed
+    // console.log((a.t1 - t0)/1000 + "seconds.")
+    let queryDurat = durat/count
+    let querySpd =  1/(durat/count)
+    return {duration: durat, querySpeed: querySpd, queryDuration: queryDurat, parallelSpeed: parallSpeed, parallelDuration: paralDurat}
+}
+speedTest(() => delay(1000),10,10).then(result => console.log(result))
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a = 5;  
+        var b, c;
+        b = (a * 5);  
+        b = ((c = (b/2)));
+    </script>
+    <script>
+        let b=7  c=b*2
+    </script>
+    <script>
+        alert("Error")
+
+    [1, 2].forEach(alert)
+    </script>
+    <script>
+        var v=1
+        var b=1
+            b
+            ++
+            v
+    </script>
+    <script>
+        var a=6;
+        var b=8;
+        var d;
+        var c=(a+b);
+            +
+            (d=5)
+    </script>
+    <script>
+        var AgeUser = prompt("Your age");
+        var date = new Date();
+        var DateOfBirthday;
+        DateOfBirthday = date.getFullYear()-AgeUser;
+        alert("Your date of birthday: "+DateOfBirthday);
+    </script>
+    <script>
+        var Temperature = prompt("Temperature 0f `C");
+        var Farengeit;
+        Farengeit = Temperature * 1.8 + 32;
+        alert("Temperature of `F: "+Farengeit );
+    </script>
+    <script>
+        var FirstNumber = prompt("Enter first number:");
+        var SecondNumber = prompt("Enter second number:");
+        var Result;
+        Result = FirstNumber/SecondNumber;
+        if(Result>0){
+        alert (Math.floor(Result))
+        }
+        else {
+        alert (Math.floor(Result)+1)
+        }
+    </script>
+    <script>
+        var YourNumber = prompt("Enter Number");
+        if ( Number(YourNumber)){
+        alert("Это число")
+        }
+        else{
+        alert("Это не число")
+        }
+        if(YourNumber%2==0){
+        alert("Ваше число четное")    
+        }
+        else{
+            alert("Ваше число нечетное")
+        }
+    </script>
+    <script>
+        let Name = prompt("what is your name")
+        alert("Hello,"+Name)
+    </script>
+    <script>
+        let Theory = prompt("Напишите аксиому эскобара")
+if(Theory.indexOf("хуй")!== -1 ||Theory.indexOf("пизд")!== -1 ){
+alert("Вы сказали плохие слова")
+}
+    </script>
+    <script>
+        let boss = confirm("Хочешь увидеть еще одно всплывающее окно?");
+        if(boss == true){
+            alert("Смотри")
+        }
+        else{
+            alert("Мне пофиг что ты там нажал")
+        }
+    </script>
+    <script>
+let boss = confirm("Хотите пройти тест?");
+if(boss == true){
+let Yes = confirm("Хорошо начнем")
+while (Yes == true) {
+    if(Yes == true){
+let Yes = confirm("Хорошо начнем");
+}
+else{
+let Cancel = confirm("Уверены?");
+}  
+}
+}
+else{
+let Cancel = confirm("Уверены?");
+while (condition) {
+    if(Cancel == true){
+let Yes = confirm("Хорошо начнем")
+}
+else{
+let Cancel = confirm("Уверены?");  
+}
+}
+}
+let money = prompt("Введите валюту eur or usd","").toLowerCase();
+switch (money){
+    case "eur": 
+        let eur = prompt("Сколько вы хотите перевести?","");
+        alert("Ваша сумма в eur: "+(eur / 33).toFixed(2));
+        break;
+    case "usd": 
+        let usd = prompt("Сколько вы хотите перевести?","");
+        alert("Ваша сумма в usd: "+(usd / 28).toFixed(2));
+        break;
+}
+
+let money = prompt("Введите валюту eur or usd","").toLowerCase();
+let eur;
+let eurbuy;
+switch (money){
+    case "eur":
+        let SellBuy = confirm("Ок если продажа или отмена если покупка")
+        (SellBuy) ?  eur = prompt("Сколько вы хотите продать?","") alert("Ваша сумма в грн: "+(eur * 33).toFixed(2)) : 
+         eurbuy = prompt("Сколько вы хотите купить?","");
+        alert("Ваша сумма в eur: "+(eurbuy / 33).toFixed(2));
+        break;
+    case "usd": 
+        let usd = prompt("Сколько вы хотите перевести?","");
+        alert("Ваша сумма в usd: "+(usd / 28).toFixed(2));
+        break;
+}
+    </script>
+
+
+</body>
+</html>

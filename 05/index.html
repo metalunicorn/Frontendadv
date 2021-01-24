@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var question = prompt("Введите название задания")
+
+    if (question === "HTML th optional") {
+    
+    
+        let a = {
+            name: "Jason",
+            surname: "Born",
+            married: "False"
+        }
+        let c = {
+            name: "Boris",
+            surname: "Britva",
+            fatherName: "Alekseevich"
+        }
+        let b = {
+            name: "James",
+            surname: "Bond",
+            age: "25"
+        }
+    
+
+
+
+    
+        if ("age" in b){
+            alert("age: " + b.age)
+        }
+
+        if ("married" in a){
+            alert("married: " + a.married)
+        }
+
+        if ("fathername" in c){
+            alert("fatherName: " + c.fathername)
+        }
+    
+
+
+
+   
+        persons = [a,b,c,{name:"Napoleon", surname:"Solo"}];
+    
+
+
+    
+        for ( let i in persons){
+            console.log(persons[i])
+        }
+
+        for (let i in persons){
+            console.log(persons[i].name + " " +  persons[i].surname )
+        }
+
+        for (let i in persons){
+            console.log(Object.values(persons[i]))
+        }
+
+        for ( let i in persons){
+            persons[i]["fullName"] = (persons[i]["name"] ||'Ivan') + " " + persons[i]["surname"] + " " +  (persons[i]["fatherName"] || 'Ivanovich')
+            console.log(Object.values(persons[i]))
+        }
+        
+    
+
+
+       
+        let json = JSON.stringify(persons);
+        console.log(json);
+    
+
+
+    
+        let dStr = JSON.parse('{"name":"Sterling","surname":"Archer","fatherName":"Melory"}')
+        persons[5] = dStr;
+    
+
+    
+        var str = "<table border='1'>"
+        for ( let i in persons){
+            str += `<tr><td>${persons[i].name}</td><td>${persons[i].surname}</td><td>${persons[i].fatherName || "Не указан"}</td><td>${persons[i].age || "Не указан"}</td><td>${persons[i].married || "Не указан"}</td></tr>`
+        }
+        str += "</table>"
+        console.log(str)
+        document.write(str)
+    
+        let allKeys = [];
+            for (let i in persons) {
+                for ( let key in persons[i]) {
+                        if (!(allKeys.includes(key))) { allKeys.push(key) };
+                }
+            }
+
+        var str = "<table border='1'>"
+        for (let j in allKeys){
+            
+            str +=`<th>${allKeys[j]}</th>`    
+        }
+        for ( let i in persons){
+            str += `<tr>`
+            for ( let keys in allKeys ){
+            str += `<td>`
+                if( allKeys[keys] in persons[i] ){
+                str += `${persons[i][allKeys[keys]]}`
+                
+                }
+            str += `</td>`
+            }
+        str += `</tr>`
+        }
+        str += "</table>"
+
+        console.log(str)
+        document.write(str)
+
+        var str = "<table border='1'>"
+        for (let j in allKeys)
+            str +=`<th>${allKeys[j]}</th>`
+        for ( let i in persons){
+            str += `<tr><td>${persons[i].name}</td><td>${persons[i].surname}</td><td>${persons[i].fatherName || "Не указан"}</td><td>${persons[i].married || "Не указан"}</td><td>${persons[i].fullName || "Не указан"}</td><td>${persons[i].age || "Не указан"}</td></tr>`
+        }
+        str += "</table>"
+
+        console.log(str)
+        document.write(str)
+
+
+        var str = "<table border='1'>"
+        for (let j in allKeys){
+            if(j%2){
+                        str += `<th style = "background: red">`
+                    }
+                    else {
+                        str += `<th style = "background: green">`
+                    }
+                
+            str +=`${allKeys[j]}</th>`    
+        }
+        for ( let i in persons){
+            str += `<tr>`
+            for ( let keys in allKeys ){
+                    if(keys%2){
+                        str += `<td style = "background: red">`
+                    }
+                    else {
+                        str += `<td style = "background: green">`
+                    }
+                
+                if( allKeys[keys] in persons[i] ){
+                str += `${persons[i][allKeys[keys]]}`
+                
+                }
+            str += `</td>`
+            }
+        str += `</tr>`
+        }
+        str += "</table>"
+
+        console.log(str)
+        document.write(str)
+    }
+
+    else if (question === "blue belt") {
+        let str = ""
+        for (let key in someTree){
+            if(key == 'tagName'){
+                str += `<${someTree.tagName} ${Object.keys(someTree.attrs)}= "${someTree.attrs["border"]}">`   
+            }
+            else if(key == 'subTags'){
+                for (let i = 0;i<someTree.subTags.length;i++){
+                        for(key in someTree.subTags[i])
+                            if(key == 'tagName'){
+                                str += `<${someTree.subTags[i][key]}>`
+                            }
+                            else{
+                                    for (let j = 0;j<someTree.subTags[i].subTags.length;j++){
+                                        
+                                        for(key in someTree.subTags[i].subTags[j]){
+                                            if(key == 'tagName'){
+                                                str += `<${someTree.subTags[i].subTags[j][key]}>`
+                                            }
+                                            else{
+                                                str += `${someTree.subTags[i].subTags[j][key]}`
+                                            }
+                                            
+                                        }
+                                        str += `</${someTree.subTags[i].subTags[j]["tagName"]}>`
+                                    } 
+                            }
+                    str += `</${someTree.subTags[i]["tagName"]}>`
+                }
+                
+            }
+        }
+    }    
+
+    else if (question === "destruct array") {
+        let arr = [1,2,3,4,5, "a", "b", "c"]
+        let [odd1,even1,odd2,even2,odd3,...letters]= arr
+    } 
+
+    else if (question === "destruct string") {  
+        let arr = [1, "abc"]
+        let [number, [s1,s2,s3] ]= arr
+    }
+
+
+    else if (question === "destruct 2") { 
+        let obj = {name: 'Ivan',
+           surname: 'Petrov',
+           children: [{name: 'Maria'}, {name: 'Nikolay'}]}
+    }
+
+
+    else if (question === "destruct 3") { 
+        let {children: [{name: name1},{name: name2}]} = obj
+    }
+
+    else if (question === "black belt"){
+    // Может я не правильно понял задание 
+        var predictArray = {
+        history : '1212'
+        }
+        do{
+            var newValue = prompt('Введите 1 или 2');
+            var predictValue = predictArray["history"][0];
+            console.log(`Думаю ты загадал ${predictValue}.`)
+            if(predictValue==newValue){
+                alert(`Ты загадал ${predictValue} `)   
+            }
+            else{
+                alert(`Угадывание требует большой концентрации, а ты отвлек давай еще раз `) 
+                }
+                predictArray["history"].slice(1)
+                console.log(predictArray)
+                predictArray.history = predictArray.history.slice(1)
+                predictArray.history = predictArray.history.concat(newValue)
+            //debugger;
+        }while (newValue != null);
+    }
+        </script>
+</body>
+</html>

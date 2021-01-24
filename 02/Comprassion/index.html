@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+var age = +prompt("Сколько вам лет?","");
+if (age < 18 && age > 0){
+    alert("школьник");
+}
+else if (age > 18 && age < 30){
+    alert("молодеж");
+}
+else if (age > 30 && age < 45){
+    alert("зрелость");}
+else if (age > 45 && age < 60){
+    alert("закат");
+}
+else if (age > 60){
+    alert("как пенсия?");
+}
+else{
+    alert("то ли киборг, то ли ошибка"); 
+}
+    </script>
+    <script>
+var Size = +prompt("Введите размер верхней одежды","")
+let outerwear = [6,8,10,12,14,16,18]
+let RusOutrwear =[40,42,44,46,48,50,52,54]
+Size===RusOutrwear[0] ? alert("Ваш размер  USA: "+outerwear[0]):
+Size===RusOutrwear[1] ? alert("Ваш размер  USA: "+outerwear[1]):
+Size===RusOutrwear[2] ? alert("Ваш размер  USA: "+outerwear[2]):
+Size===RusOutrwear[3] ? alert("Ваш размер  USA: "+outerwear[3]):
+Size===RusOutrwear[4] ? alert("Ваш размер  USA: "+outerwear[4]):
+Size===RusOutrwear[5] ? alert("Ваш размер  USA: "+outerwear[5]):
+Size===RusOutrwear[6] ? alert("Ваш размер  USA: "+outerwear[6]):
+Size===RusOutrwear[7] ? alert("Ваш размер  USA: "+outerwear[7]):
+alert("Вы неправильно ввели размер");
+
+var text = confirm("Вы женщина?") ? "Вы Женщина" : "Вы Мужчина";
+alert(text);
+
+
+
+
+
+
+    </script>
+</body>
+</html>

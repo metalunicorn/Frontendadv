@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let QFloor = prompt("Введите количество этажей");
+        let QFlat = prompt("Введите количество квартир на этаже");
+        let Nflat = prompt("Введите номер квартиры");
+        let Entrance = Math.floor(((Nflat-1)/(QFloor*QFlat))+1);
+        let Floor = Math.floor((((Nflat-1)%(QFloor*QFlat))/QFlat)+1);
+        alert("Ваша квартира находится в "+Entrance +" подьезде на "+Floor +" этаже");
+    </script>
+</body>
+</html>

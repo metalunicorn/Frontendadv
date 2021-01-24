@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+["1", {}, null, undefined, "500", 700].map(a=>Number(a)?Number(a):a)
+
+["0", 5, 3, "string", null].reduce((a,b)=>!isNaN(b) && typeof b == "number" ? a*b : a, 1)
+
+function filter(obj,f) {
+  let result = {}; 
+  for (let key in obj) {
+    if (f(key,obj[key])){
+      result[key] = obj[key] ; 
+    }
+  }
+  return result; 
+}
+
+function myFilter(arr,f){
+    let result =[]
+    for (let item of arr){
+    if(f(item)){
+    result.push(item)
+    }
+}
+ return result
+}
+
+
+function map(obj,f){
+    let result ={}
+    for (let key in obj){
+ result[key] = f(key,obj[key])
+}
+ return result
+}
+
+
+function Reduce(arr, func) {
+    for (i = 1; i < arr.length; i++) {
+        arr[i] = func(arr[i - 1], arr[i]);
+    }
+    return arr[arr.length - 1];
+};
+
+
+
+function sort(arr , key , sort = true) {
+    if (sort) {
+        arr.sort((a,b)=>(a[key]>b[key]? 1 : -1));
+    } else {
+        arr.sort((a,b)=>(a[key] > b[key] ? -1 : 1))
+    }
+    return arr
+}
+
+
+function sumTo(n,itr,numElemnts) {
+  if (numElemnts <=0) return 0;
+  return n + sumTo(n+itr,itr,numElemnts-1);
+}
+
+
+var someTree = {
+    tagName: "table", //html tag
+    children: [ //вложенные тэги
+        {
+                    tagName: "tr",
+                    children: [
+                        {
+                            tagName: "td",
+                            text: "some text",
+                        },
+                        {
+                            tagName: "td",
+                            text: "some text 2",
+                        }
+                    ]
+        }
+    ],
+    attrs: 
+    {
+        border: 1,
+    },
+}
+
+
+function Constr(obj){
+let node = document.createElement(obj.tagName)
+document.body.append(node)
+if(obj.children){
+    for(tag of obj.children)
+    node.append(Constr(tag))
+}
+if(obj.attrs){
+    for(attrsName in obj.attrs){
+         node.setAttribute(`${attrsName}`,`${obj.attrs[attrsName]}`)
+    }
+}
+if(obj.text){
+    node.innerHTML = obj.text;
+}
+return node
+}
+
+    </script>
+</body>
+</html>

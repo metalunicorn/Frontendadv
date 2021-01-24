@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+function Password(parent, open){
+
+    const passwordArea = document.createElement("div")
+    this.password = document.createElement("input")
+    const checkbox = document.createElement("div")
+    this.img = document.createElement("img")
+    var pass = this
+
+    passwordArea.setAttribute("class","passwordArea")
+    this.password.setAttribute("class","password")
+
+    parent.append(passwordArea)
+    passwordArea.append(this.password)
+    passwordArea.append(checkbox)
+    checkbox.append(this.img)
+    
+    this.setValue = function(newValue) {
+        this.password.value = newValue
+
+        return this.password.value
+    }
+
+    this.getValue = function(){
+    return this.password.value
+    }
+
+    this.setOpen = function(newOpen){
+        open = newOpen
+        seePass()
+        return open;
+    }
+    this.getOpen = function(){
+    return open;
+    }
+    
+    this.img.onclick = function(){
+        if(open){
+        pass.img.setAttribute('src','close.png')
+        pass.password.setAttribute('type','password')
+        open = false
+        }
+        else{
+        pass.img.setAttribute('src','open.png')
+        pass.password.setAttribute('type','text') 
+        open = true
+        }
+        pass.onOpenChange()
+    }
+    console.log(this)
+    this.password.oninput = () => {
+        this.onChange()
+    }
+    this.onChange  = () => {}
+    this.onOpenChange  = () => {}
+    function seePass() {
+        if(open) {
+        pass.img.setAttribute('src','open.png')
+        pass.password.setAttribute('type','text') 
+        }
+        else{
+        pass.img.setAttribute('src','close.png')
+        pass.password.setAttribute('type','password')
+        }
+    }
+    seePass() 
+}
+
+function Login(parent){
+        let password2 = new Password(document.body,open)
+        this.login = document.createElement('input')
+        this.button = document.createElement('button')
+        this.button.setAttribute('disabled','disabled')
+        this.button.innerText = 'Submit'
+
+
+        var open = false;
+        parent.append(this.login)
+        parent.append(this.button)
+        var login = this
+
+        this.login.onkeyup = function(){
+            if(password2.password.value.length != 0 && login.login.value.length != 0 ){
+                login.button.removeAttribute("disabled")
+                open = true
+            }
+            else{
+                login.button.setAttribute('disabled','disabled')
+                open = false
+            } 
+        }
+
+        password2.onChange = function (){
+            if(password2.password.value.length != 0 && login.login.value.length != 0 ){
+                login.button.removeAttribute("disabled")
+            }
+            else{
+                login.button.setAttribute('disabled','disabled')
+            }
+            this.onOpenChange()
+        }
+
+        this.login.oninput = () => {
+            login.onChange()
+        }
+
+        login.setValue = function(newValue) {
+            login.login.value = newValue
+            return login.login.value
+        }
+
+        login.getValue = function(){
+        return login.login.value
+        }
+
+        this.setOpen = function(newOpen){
+            if(newOpen) login.button.removeAttribute("disabled")
+            else login.button.setAttribute('disabled','disabled')
+            open = newOpen
+            return newOpen;
+        }
+
+        this.getOpen = function(){
+        return open;
+        }
+
+            console.log(this)
+
+        this.onChange  = () => {}
+        this.onOpenChange = () => {}
+}
+
+function CheckPass(parent) {
+    let password2 = new Password(document.body,open)
+    var checkPass = document.createElement("input")
+    var button = document.createElement('button')
+    button.setAttribute('disabled','disabled')
+    button.innerText = 'Submit'
+    parent.append(checkPass)
+    parent.append(button)
+    
+    password2.onChange = function(){
+        if (password2.getOpen()) {
+            checkPass.setAttribute('hidden','true')
+        } else {
+            checkPass.removeAttribute('hidden')
+            checkPass.setAttribute('type','password')
+        } 
+    }
+
+    password2.onOpenChange = function (){
+            if(password2.getValue() == checkPass.value || password2.getOpen()){
+                button.removeAttribute("disabled")
+            }
+            else{
+                button.setAttribute('disabled','disabled')
+            }
+    }
+    checkPass.onkeyup = function (){
+            if(password2.getValue() == checkPass.value){
+                button.removeAttribute("disabled")
+            }
+            else{
+                button.setAttribute('disabled','disabled')
+            }
+    }
+}
+let p = new Password(document.body)
+let l = new Login(document.body)
+let cp = new CheckPass(document.body)
+</script>
+
+
+
+<style>
+body {
+    display: block;
+    
+}
+.passwordArea{
+    max-width: max-content;
+    display: inline-flex;
+    border: 1px solid black;
+    margin: 0px 10px;
+
+
+}
+.password{
+    outline: 0;
+    border: none;
+}
+</style>
+</body>
+</html>

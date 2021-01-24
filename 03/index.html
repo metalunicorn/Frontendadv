@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+var task = prompt("Введите название задания")
+switch (task) {
+    case "switch: sizes":
+        let Size = prompt("Введите размер верхней одежды","");
+        switch (Size){
+        case "40": alert("Ваш размер  USA: "+outerwear[0]);
+        break;
+        case "42": alert("Ваш размер  USA: "+outerwear[1]);
+        break;
+        case "44": alert("Ваш размер  USA: "+outerwear[2]);
+        break;
+        case "46": alert("Ваш размер  USA: "+outerwear[3]);
+        break;
+        case "48": alert("Ваш размер  USA: "+outerwear[4]);
+        break;
+        case "50": alert("Ваш размер  USA: "+outerwear[5]);
+        break;
+        case "52": alert("Ваш размер  USA: "+outerwear[6]);
+        break;
+        case "54": alert("Ваш размер  USA: "+outerwear[7]);
+        break;
+        default: alert("я не понял");
+        }
+    break;
+    case "switch: if":
+        let color = prompt("Введите цвет","");
+        (color==="red") ? document.write("<div style='background-color: red;'>красный</div>"):
+        (color==="black") ? document.write("<div style='background-color: black;'>красный</div>"):
+        (color==="blue") ? document.write("<div style='background-color: blue;'>blue</div>"):
+        (color==="green") ? document.write("<div style='background-color: green;'>green</div>"):
+        document.write("<div style='background-color: gray;'>Я не понял</div>");
+    break;
+    case "prompt: or":
+        var AgeUser = prompt("Your age");
+        var date = new Date();
+        var DateOfBirthday;
+        DateOfBirthday = date.getFullYear()-AgeUser; 
+        (DateOfBirthday!=2020) && alert("Your date of birthday: "+DateOfBirthday) || (DateOfBirthday === 2020) && alert("ERROR!!!!!");
+    break;
+    case "confirm: or this days":
+        let shopping = confirm("Шопинг")
+        shopping == true && alert("Шопинг") || shopping == false && alert("Ты бяка")
+    break;
+    case "confirm: if this days":
+        let ifshopping = confirm("Шопинг");
+        if(ifshopping){
+            alert("Шопинг");
+        } 
+        else{ 
+            alert("Ты бяка");
+        } 
+    break;
+    case "triple prompt":
+        let name1 = prompt("What is your name")
+        let surname1 = prompt("What is your surname")
+        let middlename1 = prompt("What is your middlename")
+        let fio1 = [name1,surname1,middlename1]
+        alert (fio1.join(" "));
+        break;
+    case "default: or":
+        let nameor              
+        let surnameor
+        let middlenameor
+        nameor = prompt("What is your name") || "Алексий" 
+        surnameor = prompt("What is your surname") || "Алексеев"
+        middlenameor = prompt("What is your middlename") || "Алексеевич"
+        let fio2 = [nameor,surnameor,middlenameor];
+        alert (fio2.join(" "));
+        break;
+    case "default: if":
+        let name              
+        let surname
+        let middlename
+        name = prompt("What is your name")
+        surname = prompt("What is your surname") 
+        middlename = prompt("What is your middlename") 
+        if(name != true){
+            name = "Алексий" 
+          }
+         if(surname != true){
+            surname = "Алексеев" 
+          }
+         if(middlename != true){
+            middlename = "Алексеевич" 
+         }
+        let fio = [name,surname,middlename];
+        alert (fio.join(" "));
+        break;
+    case "login and password":
+        let login = prompt("Введите логин")
+        if (login === "admin"){
+        let password = prompt("Введите пароль")
+        if (password === "qwerty"){
+            alert("Поздравляем")
+        }
+        else{
+            alert("Вы неправильно ввели пароль")
+        }
+        }
+        else{
+            alert("Вы неправильно ввели логин")
+        }
+        break;
+    case "currency calc":
+        fetch('https://api.exchangeratesapi.io/latest')
+        .then(res => res.json())
+        .then(d => {
+                let money = prompt("Введите валюту php or usd","").toLowerCase();
+                let ratios = {
+                    value: ["usd","php"]
+                }    
+                if(money === ratios.value[0]){
+                    confirm("Ок если продажа или отмена если покупка"); 
+                    if(confirm==true){
+                        let sell = prompt("Сколько вы хотите продать?","");
+                        alert("Ваша сумма в eur: "+(sell * d.rates.USD).toFixed(2));
+                    }
+                else{
+                    let buy = prompt("Сколько вы хотите купить?","");
+                    alert("Вам нужно : "+(buy * d.rates.USD).toFixed(2)+"eur"); 
+                    }   
+                }
+                else if(money === ratios.value[1]){
+                    confirm("Ок если продажа или отмена если покупка"); 
+                    if(confirm==true){
+                    let sell = prompt("Сколько вы хотите продать?","");
+                    alert("Ваша сумма в eur: "+(sell * d.rates.PHP).toFixed(2));
+                    }
+                    else{
+                    let buy = prompt("Сколько вы хотите купить?","");
+                    alert("Вам нужно : "+(buy * d.rates.PHP).toFixed(2)+"eur"); 
+                    }   
+                }
+                else {
+                alert("Error");
+                }});
+    break;
+    case "scissors":
+        let variant = prompt("Введите: камень,ножницы,бумага").toLowerCase();
+        let compvar = ["камень","ножницы","бумага"]
+        let compvar2 = compvar[Math.floor(Math.random() * (3 - 0) + 0)]
+        variant === compvar2 && alert("draw") || (variant === "камень" && (compvar2 === "ножницы" && alert("You win") || (compvar2 === "бумага" && alert("You lose")))) || (variant === "ножницы" && (compvar2 === "бумага" && alert("You win") || (compvar2 === "камень" && alert("You lose")))) || (variant === "бумага" && (compvar2 === "камень" && alert("You win") || (compvar2 === "ножницы" && alert("You lose")))) || ( variant !="камень" && variant !="ножницы" && variant !="бумага" && variant != compvar2  && alert("Не то ввел"));
+    break;
+    default:
+        break;
+    }
+    </script>
+</body>
+</html>

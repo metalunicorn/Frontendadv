@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let variant = prompt("Введите: камень,ножницы,бумага").toLowerCase();
+let compvar = ["камень","ножницы","бумага"]
+let compvar2 = compvar[Math.floor(Math.random() * (3 - 0) + 0)]
+variant === compvar2 && alert("draw") || (variant === "камень" && (compvar2 === "ножницы" && alert("You win") || (compvar2 === "бумага" && alert("You lose")))) || (variant === "ножницы" && (compvar2 === "бумага" && alert("You win") || (compvar2 === "камень" && alert("You lose")))) || (variant === "бумага" && (compvar2 === "камень" && alert("You win") || (compvar2 === "ножницы" && alert("You lose")))) || ( variant !="камень" && variant !="ножницы" && variant !="бумага" && variant != compvar2  && alert("Не то ввел"));
+    </script>
+</body>
+</html>

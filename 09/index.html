@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+
+
+
+        function makeProfileTimer(){
+    var t0 = performance.now()
+        function timer(){
+            var t1 = performance.now()
+            return result = t1-t0
+        }
+    return timer
+}
+
+
+
+function makeSaver(f){
+
+var save = f
+var save1 = 0;
+function saver(){
+
+     if(!save1) {
+         save1 = save()
+
+     }
+    return save1
+}
+return saver
+}
+
+
+( function () {
+for(let i=0;i<5;i++){
+    setTimeout(() => console.log(5-i), 1000*i )
+}
+ setTimeout(() => console.log("Поехали!"),5000)
+})()
+
+function myBind(f,context,arg){
+return function (...arguments){
+    let i = 0;
+    let newArg = arg.map((value) => (value === undefined ? arguments[i++] : value));
+     return f.apply(context,...newArg) 
+    }
+}
+
+    </script>
+</body>
+</html>

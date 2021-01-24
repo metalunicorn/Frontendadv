@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function objectToDOM(el, data){
+        let table = document.createElement('table')
+        el.append(table)
+        for (key in data){
+          let tr = document.createElement('tr')
+          let th = document.createElement('th')
+          th.innerHTML = `${key}`
+          table.append(tr)
+          tr.append(th)
+          let td = document.createElement('td')
+          td.innerHTML = `${data[key]}`
+          tr.append(td)
+          var arr = []
+          if(Array.isArray(data[key])){
+            td.innerText = ``
+              for(link of data[key]){
+                  if(link.startsWith('http://swapi.dev/api/')){
+                    const button = document.createElement('button')
+                    button.innerText = `${link}`                  
+                    td.append(button) 
+                    button.onclick = function(){
+                    fetch(`${button.innerText}`)
+                    .then(res => res.json())
+                    .then(link => objectToDOM(td, link))
+                    }
+                  }
+              }
+          }
+          else {
+            arr = [data[key]]
+            for(link2 of arr){
+                if(link2.startsWith('http://swapi.dev/api/')){
+                    td.innerText = ``
+                    const button = document.createElement('button')
+                    button.innerText = `${link2}`                  
+                    td.append(button) 
+                    var link = link2
+                    button.onclick = function(){
+                    fetch(`${button.innerText}`)
+                    .then(res => res.json())
+                    .then(link => objectToDOM(td, link))
+                    }
+                }
+            }
+            
+            }
+        }
+      }
+      
+      fetch('https://swapi.dev/api/people/1/')
+        .then(res => res.json())
+        .then(luke => objectToDOM(document.body, luke))
+
+        let myfetch = function(url) {
+    return new Promise(function(resolve,reject){
+     let xhr = new XMLHttpRequest();
+     xhr.open('GET', `${url}`);
+     xhr.onreadystatechange = function() {
+      if (this.readyState === 4) {
+        if (this.status >= 200 && this.status < 400) {
+          var r=JSON.parse(this.responseText);
+          resolve(r); // Вызываем resolve и передаем text в качестве параметра
+        } else {
+          reject(new Error('Error')); // Обработка ошибки
+      }
+     }
+    };
+     xhr.send()
+
+    })
+
+}
+myfetch('https://swapi.dev/api/people/1/')
+  .then(luke => console.log(luke))  
+
+
+
+let delay = (ms) => new Promise((resolve) => setTimeout(() => resolve(`Delay ${ms} ms`), ms));
+
+Promise.race([delay, myfetch('https://swapi.dev/api/people/1/')]).then(function(value) {
+  console.log(value);
+});
+
+Promise.race([delay(Math.random() * 100), myfetch('https://swapi.dev/api/people/1/')]).then(function(value) {
+  console.log(value);
+});
+    </script>
+</body>
+</html>

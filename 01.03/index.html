@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let div = document.createElement('div');
+        var credentials = {
+    login: 'admin',
+    password: 'qwerty',
+};
+var login = prompt("Enter Login");
+var password = prompt("Enter Password");
+var newDiv = document.createElement("div");
+if  (login === credentials.login && password === credentials.password)
+{
+    newDiv.innerHTML = "<h1>Welcome!</h1>";
+    my_div = document.getElementById("org_div");
+    document.body.insertBefore(newDiv, my_div);
+}
+else {
+    newDiv.innerHTML = "<h2>incorrect login or password</h2>";
+    my_div = document.getElementById("org_div");
+    document.body.insertBefore(newDiv, my_div);
+
+}
+
+    </script>
+</body>
+</html>

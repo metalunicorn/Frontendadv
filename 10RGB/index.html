@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Другой тайтл ПРИВЕТ 17й</title>
+        <style>
+        </style>
+    </head>
+    <body>
+        <h1 id='title'></h1>
+        <div class="Controler">
+            <div id='container1'></div>
+            <div id='container2'></div>
+            <div id='container3'></div>
+        </div>
+        <div id='container4'></div>
+        <script>
+
+            function Control(el, {value=0, step=1,
+                                max=100, min=0, 
+                                maxAngle=360, minAngle=0}={}){
+
+                const img = document.createElement('img')
+                img.src   = '1@3x.png'
+                el.append(img)
+
+                const ratio = (maxAngle - minAngle) / (max - min)
+
+                const value2Deg = () => ratio * (value - min) + minAngle
+
+                const changeValue = (delta, fireEvent=false) => {
+                    let newValue = value +delta
+                    if (newValue >= max) newValue = max
+                    if (newValue <= min) newValue = min
+
+                    value = newValue
+
+                    //console.log(value)
+
+                    if (fireEvent && this.onChange && typeof this.onChange === 'function'){
+                        this.onChange(value)
+                    }
+
+                    img.style.transform = `rotate(${value2Deg()}deg)`;
+                }
+
+                const {top, left} = img.getBoundingClientRect()
+
+                changeValue(0)
+
+                console.log(img.width, top, left)
+
+                img.onclick = e => {
+                    changeValue(e.clientX - left > img.width/2 ? step : -step, true)
+                }
+
+                img.onmousewheel = e => {
+                    changeValue(e.deltaY * step, true)
+                    e.preventDefault()
+                }
+
+                let startDragAngle;
+
+                const calcAngle = ({layerX, layerY}) => {
+                    const deltaX = layerX - img.width/2
+                    const deltaY = layerY - img.height/2
+                    return (Math.atan2(deltaY, deltaX)/ Math.PI) * 180
+                }
+                
+                img.onmousedown = e => {
+                    startDragAngle = calcAngle(e)
+                    e.preventDefault()
+                }
+
+                img.onmousemove = e => {
+                    if (startDragAngle !== undefined){
+                        const currentAngle = calcAngle(e)
+                        const deltaAngle   = currentAngle - startDragAngle
+                        changeValue(deltaAngle/ratio, true)
+                        startDragAngle = currentAngle
+                        e.preventDefault()
+                    }
+                }
+
+                img.onmouseup = img.onmouseout = e => {
+                    if (startDragAngle){
+                        startDragAngle = undefined
+                        e.preventDefault()
+                    }
+                }
+
+                this.setValue = v => changeValue(v - value)
+                this.changeValue = changeValue
+
+                this.getValue = () => value
+            }
+
+            const redControl  = new Control(container1, {value: 50,max: 255})
+            const greenControl  = new Control(container2, {value: 50, max: 255})
+            const blueControl  = new Control(container3, {value: 50, max:255})
+            redControl.onChange = (value) => console.log('VOLUME', value)
+            function RGB(el) {
+                const desk = document.createElement('div')
+                el.append(desk)
+                redControl.onChange = (value) => {desk.style.backgroundColor = `rgb(${value}, ${greenControl.getValue()}, ${blueControl.getValue()})`}
+                greenControl.onChange = (value) => {desk.style.backgroundColor = `rgb(${redControl.getValue()}, ${value}, ${blueControl.getValue()})`}
+                blueControl.onChange = (value) => {desk.style.backgroundColor = `rgb(${redControl.getValue()}, ${greenControl.getValue()}, ${value})`}
+                desk.style.width = `1000px`
+                desk.style.height = `1000px`
+                desk.style.display = `flex`
+            }
+            const RGBdesk = new RGB(container4)
+        </script>
+        <style>
+            .Controler {
+                display: flex;
+
+            }
+            
+        </style>
+    </body>
+</html>

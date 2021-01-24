@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+let money = prompt("Введите валюту eur or usd","").toLowerCase();
+let eur;
+let eurbuy;
+let usd;
+let usdbuy;
+switch (money){
+    case "eur":
+       confirm("Ок если продажа или отмена если покупка") ?
+        (eur = prompt("Сколько вы хотите продать?","")) && alert("Ваша сумма в грн: "+(eur * 33).toFixed(2)) : 
+        ((eurbuy = prompt("Сколько вы хотите купить?","")) && alert("Вам нужно : "+(eurbuy * 33.4).toFixed(2)+"грн"));
+        break;
+    case "usd": 
+     confirm("Ок если продажа или отмена если покупка") ?
+        (usd = prompt("Сколько вы хотите продать?","")) && alert("Ваша сумма в грн: "+(usd * 28).toFixed(2)) : 
+        ((usdbuy = prompt("Сколько вы хотите купить?","")) && alert("Вам нужно : "+(usdbuy * 28.4).toFixed(2)+"грн"));
+        break;
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="A">A</button>
+    <button id="b">b</button>
+    <h1 id="Cart"></h1>
+    <script>
+        function createStore(reducer) {
+            let state = reducer(undefined, {})
+            let cbs = []
+
+            function dispatch(action) {
+                //if (typeof action === 'function'){
+                //return action(dispatch)
+                //}
+                let newState = reducer(state, action)
+                if (state !== newState) {
+                    state = newState
+                    for (let cb of cbs) cb()
+                }
+            }
+
+            return {
+                getState() {
+                    return state
+                },
+                dispatch,
+                subscribe(cb) {
+                    cbs.push(cb)
+                    return () => {
+                        cbs = cbs.filter(someElement => someElement !== cb)
+                    }
+                }
+            }
+        }
+
+        function cartReducer(state = {}, {type,id,count}){
+            if(type === "CART_ADD"){
+                return {
+                    ...state,
+                    [id] : count + (state[id] || 0)
+                }
+            }
+            if(type === "CART_DELETE"){
+                const {[id]:dich,...newState } = state;
+                return newState
+            }
+            return state
+
+        }
+        function promiseReducer(state = {}, {type,status,payload,error,}) {
+                if (type === "PROMISE") {
+                    return {...state, [name]:{status,payload,error}}
+                }
+                return state
+        }   
+           
+        const store = createStore(cartReducer)
+        store.subscribe(() => console.log(store.getState()))
+
+        const actionCartAdd = (id,count = 1) => ({type:"CART_ADD", id, count}) 
+        const actionCartDelete = (id) => ({type:"CART_DELETE", id}) 
+
+        A.onclick = () => store.dispatch( actionCartAdd("A"))
+        b.onclick = () => store.dispatch(actionCartAdd('b'))
+        store.subscribe(() => {
+            Cart.innerText = Object.keys(store.getState()).length
+        })
+    </script>             
+</body>
+</html>
