@@ -16,6 +16,7 @@
         let orderGoods = []
         let goodArea = document.createElement('div')
         let goodUl = document.createElement('ul')
+        let viewOrders = document.createElement("div")
         const actionCartAdd = (id, count = 1) => ({type:"CART_ADD", id, count}) 
         const actionCartDelete = (id) => ({type:"CART_DELETE", id}) 
         const store = createStore(cartReducer)
@@ -78,7 +79,8 @@
                         btn.onclick = () => {
                             let count = +prompt("Введите количество")
                             store.dispatch( actionCartAdd(_id,count))
-                            orderGood(_id, count)
+                            
+                            //orderGood(_id, count)
 
                         }
                 }
@@ -127,7 +129,7 @@
 
                 }
             }
-            cat(document.body)
+            
 
         async function addOrder(el) {
 
@@ -157,36 +159,31 @@
                 }
         }`, { mass: orderGoods })
         console.log(order)
-                let viewOrders = document.createElement("div")
-                let priceGoods = document.createElement('div')
-                viewOrders.innerText = `Ваши заказы :`
-                for (const { good, price, count, createdAt } of order.data.OrderUpsert.orderGoods) {
-
-
-
-                    viewOrders.innerHTML += `<br> ${good.name}: ${count} price: ${price} <br>`
-
-
-
-
-                    // let priceGood = document.createElement("div")
-                    // let countGood = document.createElement("div")
-
-                    // priceGood.innerText = 'Cтоимость: ' + price
-                    // countGood.innerText = 'количество товаров: ' + count
-                    // nameGood.innerText = good.name
-
-                    // viewOrders.append(nameGood)
-                    // viewOrders.append(countGood)
-                    // viewOrders.append(priceGood)
-
-                }
-                priceGoods.innerText = 'Общая стоимость: ' + order.data.OrderUpsert.total
-                viewOrders.append(priceGoods)
-                el.append(viewOrders)
             }
 
-      function orderGood() {
+        async function cartOrder(el,id,count=0) {
+            
+            let order = await gql(`query gfa($good: String){
+                    GoodFind(query:$good){
+                        _id
+                        name
+                        price
+                        images{
+                                _id
+                        url
+                            }
+                    }
+                    }`, 
+                    { good: JSON.stringify([{ "_id": id }]) })
+            console.log(order)
+            for (const { name, price,images} of order.data.GoodFind) {
+                viewOrders.innerHTML += `<br> ${name}: ${count} price: ${price} <br>`
+                             
+            }
+            el.append(viewOrders)
+        }
+        
+        function orderGood() {
             for (let id in store.getState()) {
                 orderGoods.push({ count: store.getState()[id], good: { _id: id } })
             }
@@ -195,22 +192,26 @@
 
         function cart(el) {
             let cart = document.createElement('span')
-            let cartOrder = document.createElement('span')
+            let cartOrderArea = document.createElement('span')
             cart.innerHTML = '<img src="126083.png" width="30" height="30" alt="cart">'
             el.append(cart)
             var load;
             cart.onclick = () => {
-                    addOrder(cartOrder)
-                if(!load){
-                el.append(cartOrder)
-                load = true
+                
+                viewOrders.innerHTML = ''
+                viewOrders.innerText = `Ваши заказы :`
+                for (let id in store.getState()) {
+                cartOrder(document.body,id,store.getState()[id])
                 }
+                
+               
+                el.append(cartOrderArea)
             }
 
         }
-        cart(document.body)
+        
 
-    function createStore(reducer) {
+        function createStore(reducer) {
         let state = reducer(undefined, {})
         let cbs = []
 
@@ -239,7 +240,7 @@
         }
     }
 
-    function cartReducer(state = {}, {type,id,count}){
+        function cartReducer(state = {}, {type,id,count}){
 
             if(type === "CART_ADD"){
                 return {
@@ -427,7 +428,8 @@
             if (result.errors) return;
             result.data.login ? (localStorage.authToken = result.data.login) : console.log("Неправильно введен логин или пароль")
         }
-
+        cat(document.body)
+        cart(document.body)
     </script>
 </body>
 
