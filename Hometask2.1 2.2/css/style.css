@@ -1,0 +1,33 @@
+.holder a[href*="http"]
+{
+ color: red;
+}
+#link6
+{
+    background-color: green;
+}
+.paragph
+{
+    font-size: 26px;
+}
+.text-box p:nth-child(7)
+{
+    color: green;
+}
+.text-box h3:first-child
+{
+    color: pink;
+}
+
+#greycol
+{
+    color: grey;
+}
+div div p
+{
+    color: red;
+}
+.yellow
+{
+    color: yellow;
+}
