@@ -1,3 +1,7 @@
+import secHandIMG from './sec.png';
+import minHandIMG from './min.png';
+import hourHandIMG from './hour.png';
+import tabloIMG from './tablo.png';
 import React, { Component, useState, useEffect } from 'react'
 import './App.css'
 // import Header from './components/Header';
@@ -85,9 +89,11 @@ const PasswordConfirm = ({min=3}) => {
   )
 }
 
-const Timer = ({sec}) => {
-const [counter, setCounter] = useState(sec) 
-const [pause,setPause] = useState(true) 
+let stop = true;
+
+const Timer = ({seconds}) => {
+// const [counter, setCounter] = useState(sec) 
+
 
 const padTime = time => {
   return String(time).length === 1 ? `0${time}` : `${time}`;
@@ -102,27 +108,93 @@ const format = time => {
 };
 
 
-// let minutes = Math.floor(sec /60);
-// let hours = Math.floor(minutes /60);
 
-const tick = () => {
-  if(!pause && counter !== 0){
-          setCounter(counter-1)
-  }
-}     
-setTimeout(tick, 1000)
+// const tick = () => {
+//   if(!pause && counter !== 0){
+//           setCounter(counter-1)
+//   }
+// }     
+// setTimeout(tick, 1000)
 
   return(
     <>
-    <div>{format(counter)}</div>
-    <button onClick = {()=>setPause(!pause) }>{(!pause && "Stop" )|| "Go"}</button>
+    <div className = {"container-fluid align-items-center  display-1"} >{format(seconds)}</div>
     </>
   )
 }
 
+const Watch = ({seconds = 57656}) => {
+  const [sec,setSec] = useState((seconds%60)*6)
+  const [min,setMin] = useState((Math.floor(seconds / 60)%60)*6)
+  const [hour,setHour] = useState((Math.floor(seconds / 3600)%24)*30)
+  setTimeout(()=>{
+    if(sec === 360){
+      setSec(0)
 
+      if(min === 360)
+      {
+        setMin(0)
+        setHour(hour+6)
+      }
+      else{
+        setMin(min+6)
+      }
+    }
+    else{
+      setSec(sec + 6)
+    }
+  },1000)
+  return(
+    <>
+    <div className = {'clock'}>
+      <img src = {secHandIMG} style = {{transform: `rotate(${sec}deg)`}}/>
+      <img src = {minHandIMG} style = {{transform: `rotate(${min}deg)`}}/>
+      <img src = {hourHandIMG} style = {{transform: `rotate(${hour}deg)`}}/>
+      <img id = {"tablo"} src = {tabloIMG}/>
+    </div>
+    </>
+  );
+}
 
+const SecondsTimer = ({seconds}) => <h2>{seconds}</h2>
 
+const TimerContainer = ({seconds=1800, refresh=1000, render=SecondsTimer}) => {
+  const [count,setCount] = useState(seconds);
+  const [pause,setPause] = useState(false) 
+  const Sec = render
+  let timer;
+  
+  // const tick = () => {
+  //   if(count !== 0){
+  //       setCount(count-1)
+  //   }
+  // }     
+  useEffect(()=>{
+    if(!pause){
+    let elapsedTime = refresh;
+    
+    if (count > 0) {
+    let startTime = Date.now();
+      function step() {
+        elapsedTime = Date.now() - startTime;
+        setCount(c=> c-1)
+        console.log(elapsedTime)
+      }
+      timer = setInterval(step,elapsedTime);
+    }
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }},[count,pause])
+    return (
+      <>
+      <Sec seconds = {count}/>
+      <button className = {(!pause && "btn btn-outline-danger")|| "btn btn-outline-success"} onClick = {()=>setPause(!pause) }>{(!pause && "Stop")|| "Go"}</button>
+      </>
+    )
+ }
 
 const ButtonCounter = ({КОГОМАЛЮВАТИ="div"}) => {
   const [counter, setCounter] = useState(0)
@@ -161,7 +233,13 @@ function App() {
         onLogin={(l, p) => console.log(l, p)} />
 
       <PasswordConfirm min={2}/>
-      <Timer sec = {3600}/>
+      <Timer seconds = {3600}/>
+      <br/>
+      <br/>
+      <TimerContainer render = {Timer}/>
+      <br/>
+      <br/>
+      <Watch seconds = {(Date.now()/1000)}/>
     </>
   )
 }

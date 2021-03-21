@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.clock {
+  position: relative;
+  height: 102px;
+  width: 102px;
+  margin: 10px;
+  border: 1, solid, grey;
+}
+#tablo{
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  left: 0px;
+}
+.clock img {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  left: 29px;
+}
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+}
