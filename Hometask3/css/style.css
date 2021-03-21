@@ -1,0 +1,82 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    height: 4000px;
+}
+.Head
+{
+    background-color: green;
+    height: 220px;
+    width: 350px;
+    border: 2px dashed red;
+    margin-bottom: 30px;
+    padding: 15px 10px 20px;
+}
+.Threecolor
+{
+    height: 550px;
+    width: 300px;
+    color: white;
+    border: 2px solid black;
+    padding: 25px 75px;
+    margin: 50px;
+}
+.Red
+{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: red;
+    margin-bottom: 25px;
+    /* margin: 85px 100px 10px; */
+    
+}
+.Yellow
+{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: yellow;
+    margin-bottom: 25px;
+    /* margin: 10px 100px 10px; */
+}
+.Green
+{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: green;
+    /* margin: 10px 100px 85px; */
+}
+.kvadratRed
+{
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    background-color: rgb(255, 136, 136);
+    left: 1px;
+}
+.kvadratBlue
+{
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    background-color: rgb(126, 136, 225);
+    left: 101px;
+    bottom: -225px;
+    z-index: 1;
+
+}
+.kvadratGreen
+{
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    background-color: rgb(77, 238, 153);
+    left: 201px;
+    bottom: -325px;
+}
